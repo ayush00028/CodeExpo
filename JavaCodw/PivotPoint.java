@@ -1,30 +1,31 @@
 import java.util.*;
-
-public class PivotPoint 
-{
-    public static void main(String[] args) 
-    {
+public class PivotPoint {
+    public static void main(String[] args) {
         Scanner sc=new Scanner(System.in);
-        int n,i;
-        n=sc.nextInt();
-        int[] a=new int[n];
-        long Total=0;
-        for(i=0;i<n;i++){
-            a[i]=sc.nextInt();
-            Total+=a[i];
+        System.out.println("ENTER THE SIZE OF ARRAY");
+        int n=sc.nextInt();
+        int[] a = new int[n];
+
+        int totalSum = 0;
+
+        // Find total sum
+        for (int i = 0; i < a.length; i++) {
+            totalSum += a[i];
         }
-         long Left=0,Right=0;
-        for(i=0;i<n;i++)
-        {
-            Right=Total - Left - a[i];
-            if(Left == Right)
-            {
-                System.out.println(i);
-                return;
+
+        int leftSum = 0;
+
+        for (int i = 0; i < a.length; i++) {
+
+            int rightSum = totalSum - leftSum - a[i];
+
+            if (leftSum == rightSum) {
+                System.out.println("Pivot point = " + i);
+                break;
             }
-            Left+=a[i];
+
+            leftSum += a[i];
         }
-        System.out.println("-1");
         sc.close();
     }
 }

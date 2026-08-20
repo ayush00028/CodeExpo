@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Citizen Service Navigator — UI Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#1D3557;
+    --indigo-deep:#132840;
+    --marigold:#EAA22F;
+    --marigold-soft:#FBE7C6;
+    --leaf:#4C7A5E;
+    --leaf-soft:#E1EEE5;
+    --sindoor:#C23616;
+    --sindoor-soft:#F7DDD6;
+    --paper:#F3F0E6;
+    --paper-deep:#EAE5D5;
+    --card:#FFFFFF;
+    --ink:#1C2229;
+    --ink-soft:#5B6470;
+    --line:#E1DCC9;
+    --radius:20px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 15% 8%, rgba(234,162,47,0.10), transparent 40%),
+      radial-gradient(circle at 85% 90%, rgba(76,122,94,0.10), transparent 40%);
+    color:var(--ink);
+    font-family:'Noto Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding:56px 24px 80px;
+  }
+  .wrap{max-width:1280px;margin:0 auto;}
+
+  /* ---- Header ---- */
+  .top{margin-bottom:56px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--leaf); font-weight:600; margin-bottom:14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:"";width:22px;height:2px;background:var(--leaf);display:inline-block;}
+  h1{
+    font-family:'Fraunces', serif;
+    font-optical-sizing:auto;
+    font-weight:600;
+    font-size:clamp(34px,4.4vw,54px);
+    line-height:1.05;
+    margin:0 0 16px;
+    color:var(--indigo);
+    letter-spacing:-0.01em;
+  }
+  h1 em{
+    font-style:italic; color:var(--marigold);
+    font-weight:500;
+  }
+  .lede{
+    font-size:17px; line-height:1.6; color:var(--ink-soft);
+    max-width:640px; margin:0;
+  }
+
+  /* ---- Journey rail ---- */
+  .journey{
+    position:relative;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:28px;
+    margin:56px 0 28px;
+  }
+  .journey-line{
+    position:absolute; top:15px; left:6%; right:6%; height:2px;
+    background-image:linear-gradient(to right, var(--marigold) 0 8px, transparent 8px 16px);
+    background-size:16px 2px; background-repeat:repeat-x;
+    z-index:0;
+  }
+  .stage{position:relative; z-index:1;}
+  .stage-dot{
+    width:32px;height:32px;border-radius:50%;
+    background:var(--card); border:2px solid var(--marigold);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:600;
+    color:var(--indigo); margin-bottom:14px;
+  }
+  .stage-label{font-family:'Fraunces',serif; font-weight:600; font-size:19px; color:var(--indigo); margin-bottom:4px;}
+  .stage-sub{font-size:13.5px; color:var(--ink-soft); line-height:1.5; max-width:230px;}
+
+  /* ---- Screens grid ---- */
+  .screens{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:28px;
+    margin-top:36px;
+  }
+  .phone-col{display:flex; flex-direction:column; align-items:center;}
+  .phone{
+    width:100%;
+    max-width:280px;
+    background:var(--indigo-deep);
+    border-radius:38px;
+    padding:12px;
+    box-shadow:0 24px 48px -18px rgba(29,53,87,0.45), 0 4px 12px rgba(29,53,87,0.15);
+  }
+  .screen{
+    background:var(--paper);
+    border-radius:28px;
+    overflow:hidden;
+    aspect-ratio:9/19.5;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+  }
+  .statusbar{
+    height:28px; display:flex; align-items:center; justify-content:space-between;
+    padding:0 20px; font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--indigo);
+    flex-shrink:0;
+  }
+  .screen-body{flex:1; display:flex; flex-direction:column; overflow:hidden;}
+  .app-header{
+    padding:6px 18px 14px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .greet{font-family:'Fraunces',serif; font-weight:600; font-size:15px; color:var(--indigo);}
+  .greet small{display:block; font-family:'Noto Sans',sans-serif; font-weight:400; font-size:10.5px; color:var(--ink-soft); margin-top:1px;}
+  .lang-chip{
+    font-family:'IBM Plex Mono',monospace; font-size:9.5px; font-weight:600;
+    background:var(--card); border:1px solid var(--line); border-radius:999px;
+    padding:4px 9px; color:var(--indigo);
+  }
+  .bottom-nav{
+    height:56px; background:var(--card); border-top:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-around; flex-shrink:0;
+  }
+  .nav-item{display:flex; flex-direction:column; align-items:center; gap:3px;}
+  .nav-item .ic{width:16px;height:16px;}
+  .nav-item span{font-size:8px; color:var(--ink-soft); font-weight:600;}
+  .nav-item.active span{color:var(--marigold);}
+  .nav-item.active .ic{stroke:var(--marigold);}
+  .nav-item:not(.active) .ic{stroke:var(--ink-soft);}
+
+  /* Screen 1: Home / Voice */
+  .home-body{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 20px; gap:18px;}
+  .mic-ring{
+    width:104px;height:104px;border-radius:50%;
+    background:radial-gradient(circle, rgba(234,162,47,0.25), rgba(234,162,47,0) 70%);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .mic-btn{
+    width:68px;height:68px;border-radius:50%;
+    background:linear-gradient(160deg, var(--marigold), #D8901F);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 22px -6px rgba(234,162,47,0.55);
+  }
+  .mic-hint{font-size:11.5px; color:var(--ink-soft); text-align:center; max-width:170px; line-height:1.5;}
+  .mic-hint b{color:var(--indigo); font-weight:600;}
+  .typebar{
+    width:100%; background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:10px 12px; display:flex; align-items:center; gap:8px;
+  }
+  .typebar span{font-size:10.5px; color:var(--ink-soft);}
+  .chips{display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-top:2px;}
+  .chip{
+    font-size:9.5px; font-weight:600; color:var(--indigo);
+    background:var(--marigold-soft); border-radius:999px; padding:5px 10px;
+  }
+
+  /* Screen 2: Results */
+  .results-list{flex:1; overflow:hidden; padding:0 14px 8px; display:flex; flex-direction:column; gap:10px;}
+  .results-title{font-size:9.5px; color:var(--ink-soft); padding:0 4px 2px; font-weight:600;}
+  .scheme-card{
+    background:var(--card); border-radius:16px; padding:12px; border:1px solid var(--line);
+  }
+  .scheme-top{display:flex; justify-content:space-between; align-items:flex-start; gap:8px;}
+  .scheme-name{font-family:'Fraunces',serif; font-weight:600; font-size:12.5px; color:var(--indigo); line-height:1.3;}
+  .scheme-tag{font-size:8px; color:var(--leaf); font-weight:700; text-transform:uppercase; letter-spacing:.04em; margin-top:3px;}
+  .score-ring{
+    width:34px;height:34px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace; font-size:9px; font-weight:700; color:#fff; flex-shrink:0;
+  }
+  .score-high{background:conic-gradient(var(--leaf) 82%, var(--leaf-soft) 0); }
+  .score-mid{background:conic-gradient(var(--marigold) 58%, var(--marigold-soft) 0);}
+  .score-ring .inner{width:26px;height:26px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;color:var(--indigo);}
+  .doc-progress{margin-top:10px;}
+  .doc-progress-label{display:flex; justify-content:space-between; font-size:8.5px; color:var(--ink-soft); margin-bottom:4px;}
+  .bar{height:5px; border-radius:4px; background:var(--paper-deep); overflow:hidden;}
+  .bar-fill{height:100%; border-radius:4px; background:var(--leaf);}
+  .bar-fill.warn{background:var(--marigold);}
+  .cta-mini{
+    margin-top:10px; font-size:9.5px; font-weight:700; color:var(--indigo);
+    display:flex; align-items:center; gap:4px;
+  }
+
+  /* Screen 3: Documents */
+  .doc-body{flex:1; overflow:hidden; padding:0 16px 8px; display:flex; flex-direction:column; gap:8px;}
+  .doc-group-label{font-size:9px; font-weight:700; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em; margin:6px 0 2px;}
+  .doc-row{
+    display:flex; align-items:center; gap:9px; background:var(--card);
+    border-radius:12px; padding:9px 10px; border:1px solid var(--line);
+  }
+  .doc-row.missing{background:var(--sindoor-soft); border-color:transparent;}
+  .doc-status{
+    width:20px;height:20px;border-radius:50%; flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .doc-status.ok{background:var(--leaf);}
+  .doc-status.warn{background:var(--sindoor);}
+  .doc-name{font-size:10.5px; font-weight:600; color:var(--ink); line-height:1.3;}
+  .doc-note{font-size:8.5px; color:var(--ink-soft); margin-top:1px;}
+  .doc-note.alert{color:var(--sindoor); font-weight:600;}
+
+  /* Screen 4: Call */
+  .call-body{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 20px; gap:14px; text-align:center;}
+  .call-icon{
+    width:64px;height:64px;border-radius:50%; background:var(--indigo);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 22px -8px rgba(29,53,87,0.5);
+  }
+  .call-head{font-family:'Fraunces',serif; font-weight:600; font-size:15px; color:var(--indigo); line-height:1.3;}
+  .call-number{
+    font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:17px;
+    background:var(--card); border:1px dashed var(--marigold); border-radius:12px;
+    padding:8px 16px; color:var(--indigo); letter-spacing:.03em;
+  }
+  .call-sub{font-size:10px; color:var(--ink-soft); max-width:190px; line-height:1.5;}
+  .lang-row{display:flex; flex-wrap:wrap; gap:5px; justify-content:center; margin-top:2px;}
+  .lang-pill{font-size:8px; font-weight:700; color:var(--leaf); background:var(--leaf-soft); border-radius:999px; padding:4px 8px;}
+  .call-steps{display:flex; align-items:center; gap:6px; margin-top:8px;}
+  .call-step{
+    font-size:8px; font-weight:700; color:var(--ink-soft); display:flex; flex-direction:column; align-items:center; gap:4px;
+  }
+  .call-step .dot{width:8px;height:8px;border-radius:50%;background:var(--marigold);}
+  .call-arrow{color:var(--line); font-size:10px;}
+
+  .caption{margin-top:16px; text-align:center;}
+  .caption .name{font-family:'Fraunces',serif; font-weight:600; font-size:15px; color:var(--indigo);}
+  .caption .desc{font-size:12px; color:var(--ink-soft); margin-top:3px; max-width:230px; margin-left:auto; margin-right:auto; line-height:1.5;}
+
+  /* ---- Design notes strip ---- */
+  .notes{
+    margin-top:72px;
+    background:var(--indigo);
+    border-radius:24px;
+    padding:36px 40px;
+    color:#fff;
+  }
+  .notes h2{
+    font-family:'Fraunces',serif; font-weight:600; font-size:22px; margin:0 0 22px;
+    color:var(--marigold-soft);
+  }
+  .notes-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:28px;}
+  .note-item .num{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--marigold); font-weight:600; margin-bottom:8px;}
+  .note-item .t{font-weight:600; font-size:14.5px; margin-bottom:6px;}
+  .note-item .d{font-size:12.5px; color:rgba(255,255,255,0.72); line-height:1.55;}
+
+  @media (max-width:1000px){
+    .journey{grid-template-columns:repeat(2,1fr); row-gap:32px;}
+    .journey-line{display:none;}
+    .screens{grid-template-columns:repeat(2,1fr);}
+    .notes-grid{grid-template-columns:repeat(2,1fr); row-gap:26px;}
+  }
+  @media (max-width:600px){
+    body{padding:36px 16px 60px;}
+    .screens{grid-template-columns:1fr; max-width:300px; margin-left:auto; margin-right:auto;}
+    .journey{grid-template-columns:1fr;}
+    .notes{padding:28px 22px;}
+    .notes-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="eyebrow">UI Design — Citizen Service Navigator</div>
+    <h1>One path, from <em>confusion</em><br>to a completed application.</h1>
+    <p class="lede">Four screens, one continuous journey. The interface leads with voice, shows eligibility as a plain number rather than a black box, and never lets a citizen walk into a rejection blind.</p>
+  </div>
+
+  <div class="journey">
+    <div class="journey-line"></div>
+    <div class="stage">
+      <div class="stage-dot">1</div>
+      <div class="stage-label">Ask</div>
+      <div class="stage-sub">Speak or type in Hindi or English — no forms to fill first.</div>
+    </div>
+    <div class="stage">
+      <div class="stage-dot">2</div>
+      <div class="stage-label">See</div>
+      <div class="stage-sub">Matching schemes ranked with a transparent eligibility score.</div>
+    </div>
+    <div class="stage">
+      <div class="stage-dot">3</div>
+      <div class="stage-label">Prepare</div>
+      <div class="stage-sub">Every required document checked off before applying, not after.</div>
+    </div>
+    <div class="stage">
+      <div class="stage-dot">4</div>
+      <div class="stage-label">Reach</div>
+      <div class="stage-sub">No data? Call the same assistant on a toll-free line.</div>
+    </div>
+  </div>
+
+  <div class="screens">
+
+    <!-- SCREEN 1: HOME / VOICE -->
+    <div class="phone-col">
+      <div class="phone">
+        <div class="screen">
+          <div class="statusbar"><span>9:41</span><span>●●● 4G</span></div>
+          <div class="screen-body">
+            <div class="app-header">
+              <div class="greet">नमस्ते, Ramesh<small>What do you need help with?</small></div>
+              <div class="lang-chip">हिं / EN</div>
+            </div>
+            <div class="home-body">
+              <div class="mic-ring">
+                <div class="mic-btn">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+                </div>
+              </div>
+              <div class="mic-hint">Tap and speak — <b>"Mujhe kisan yojana chahiye"</b></div>
+              <div class="typebar"><span>Or type your question here…</span></div>
+              <div class="chips">
+                <div class="chip">Farmer schemes</div>
+                <div class="chip">Scholarship</div>
+                <div class="chip">Pension</div>
+                <div class="chip">PAN card</div>
+              </div>
+            </div>
+            <div class="bottom-nav">
+              <div class="nav-item active"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Home</span></div>
+              <div class="nav-item"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M9 13h6M9 17h6"/></svg><span>Docs</span></div>
+              <div class="nav-item"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>Track</span></div>
+              <div class="nav-item"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.4 2.1L8 9.9a16 16 0 0 0 6 6l1.4-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.8 2z"/></svg><span>Call</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="caption">
+        <div class="name">Ask</div>
+        <div class="desc">Voice-first home screen. Quick-topic chips cover common needs for anyone unsure how to phrase a question.</div>
+      </div>
+    </div>
+
+    <!-- SCREEN 2: RESULTS -->
+    <div class="phone-col">
+      <div class="phone">
+        <div class="screen">
+          <div class="statusbar"><span>9:42</span><span>●●● 4G</span></div>
+          <div class="screen-body">
+            <div class="app-header">
+              <div class="greet">3 schemes found<small>Ranked by how well you match</small></div>
+            </div>
+            <div class="results-list">
+              <div class="scheme-card">
+                <div class="scheme-top">
+                  <div>
+                    <div class="scheme-name">PM-KISAN Samman Nidhi</div>
+                    <div class="scheme-tag">Agriculture · Central</div>
+                  </div>
+                  <div class="score-ring score-high"><div class="inner">82%</div></div>
+                </div>
+                <div class="doc-progress">
+                  <div class="doc-progress-label"><span>Documents ready</span><span>4/5</span></div>
+                  <div class="bar"><div class="bar-fill" style="width:80%"></div></div>
+                </div>
+                <div class="cta-mini">View steps →</div>
+              </div>
+              <div class="scheme-card">
+                <div class="scheme-top">
+                  <div>
+                    <div class="scheme-name">PM Fasal Bima Yojana</div>
+                    <div class="scheme-tag">Insurance · Central</div>
+                  </div>
+                  <div class="score-ring score-mid"><div class="inner">58%</div></div>
+                </div>
+                <div class="doc-progress">
+                  <div class="doc-progress-label"><span>Documents ready</span><span>2/5</span></div>
+                  <div class="bar"><div class="bar-fill warn" style="width:40%"></div></div>
+                </div>
+                <div class="cta-mini">View steps →</div>
+              </div>
+              <div class="scheme-card">
+                <div class="scheme-top">
+                  <div>
+                    <div class="scheme-name">State Crop Subsidy</div>
+                    <div class="scheme-tag">State · Haryana</div>
+                  </div>
+                  <div class="score-ring score-high"><div class="inner">91%</div></div>
+                </div>
+                <div class="doc-progress">
+                  <div class="doc-progress-label"><span>Documents ready</span><span>5/5</span></div>
+                  <div class="bar"><div class="bar-fill" style="width:100%"></div></div>
+                </div>
+                <div class="cta-mini">View steps →</div>
+              </div>
+            </div>
+            <div class="bottom-nav">
+              <div class="nav-item"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Home</span></div>
+              <div class="nav-item active"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M9 13h6M9 17h6"/></svg><span>Docs</span></div>
+              <div class="nav-item"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>Track</span></div>
+              <div class="nav-item"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.4 2.1L8 9.9a16 16 0 0 0 6 6l1.4-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.8 2z"/></svg><span>Call</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="caption">
+        <div class="name">See</div>
+        <div class="desc">No black-box AI score — a plain percentage, plus a document-readiness bar so risk is visible before applying.</div>
+      </div>
+    </div>
+
+    <!-- SCREEN 3: DOCUMENTS -->
+    <div class="phone-col">
+      <div class="phone">
+        <div class="screen">
+          <div class="statusbar"><span>9:44</span><span>●●● 4G</span></div>
+          <div class="screen-body">
+            <div class="app-header">
+              <div class="greet">Your documents<small>For PM F

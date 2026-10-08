@@ -47,3 +47,22 @@
 *Last updated: 2026-09-29* · Powered by [**PushMyCode**](https://github.com/PushMyCode-HQ)
 
 </div>
+<!---LeetCode Topics Start-->
+# LeetCode Topics
+## Tree
+| Problem Name | Difficulty |
+| ------- | ------- |
+| [0100-same-tree](https://github.com/ayush00028/CodeExpo/tree/main/LeetCode/Easy/0100-same-tree/) | Easy |
+## Depth-First Search
+| Problem Name | Difficulty |
+| ------- | ------- |
+| [0100-same-tree](https://github.com/ayush00028/CodeExpo/tree/main/LeetCode/Easy/0100-same-tree/) | Easy |
+## Breadth-First Search
+| Problem Name | Difficulty |
+| ------- | ------- |
+| [0100-same-tree](https://github.com/ayush00028/CodeExpo/tree/main/LeetCode/Easy/0100-same-tree/) | Easy |
+## Binary Tree
+| Problem Name | Difficulty |
+| ------- | ------- |
+| [0100-same-tree](https://github.com/ayush00028/CodeExpo/tree/main/LeetCode/Easy/0100-same-tree/) | Easy |
+<!---LeetCode Topics End-->
